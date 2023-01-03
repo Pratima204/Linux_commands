@@ -1,0 +1,63 @@
+##Steps for Creating NIC Bonding
+
+Check if modprobe bonding is already installed or not.
+- modinfo bonding | more
+(check on description section of the file, if Bonding driver is installed or not.)
+
+- Create a new file called ifcfg-bond0
+vi /etc/sysconfig/network-scripts/ifcfg-bond0
+
+- Place this value:
+Add the following parameters
+DEVICE=bond0
+TYPE=Bond
+NAME=bond0
+BONDING_MASTER=yes
+BOOTPROTO=none
+ONBOOT=yes
+IPADDR=192.168.1.80
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.1
+BONDING_OPTS=”mode=5 miimon=100”
+
+Note: BOOTPROTO can be none or static if you want to assign a static IP address.
+ONBOOT is yes to enable when system reboots.
+miimon
+Specifies the MII link monitoring frequency in milliseconds. This determines how often the link state of
+each slave is inspected for link failures
+- Save and exit the file
+============================================
+
+Now create NIC file for each interface:
+
+Edit the First NIC File (enp0s3)
+- vi /etc/sysconfig/network-scripts/ifcfg-enp0s3
+- Delete the entire content
+- Add the following parameters
+TYPE=Ethernet
+BOOTPROTO=none
+DEVICE=enp0s3
+ONBOOT=yes
+HWADDR=”MAC from the ifconfig command”
+MASTER=bond0
+SLAVE=yes
+- Save and exit the file
+
+
+Create the Second NIC File (enp0s8) or Copy enp0s3
+- vi /etc/sysconfig/network-scripts/ifcfg-enp0s8
+- Add the following parameters
+TYPE=Ethernet
+BOOTPROTO=none
+DEVICE=enp0s8
+ONBOOT=yes
+HWADDR=”MAC from the ifconfig command”
+MASTER=bond0
+SLAVE=yes
+- Save and exit the file
+Restart the Network Service
+- systemctl restart network
+Test and verify the configuration
+- ifconfig or ifconfig | more
+Use following command to view bond interface settings like bonding mode & slave interface
+- cat /proc/net/bonding/bond0
