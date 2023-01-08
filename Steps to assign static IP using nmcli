@@ -1,0 +1,20 @@
+##Using nmcli to configure static IP
+
+- nmcli device (Get the listing of network interface)
+- nmcli connection modify enp0s3 ipv4.addresses 10.253.1.211/24 (subnet that I want to use is /24 and ping ip before and make sure its not used)
+- nmcli connection modify en0s3 ipv4.gateway 10.253.1.1
+- nmcli connection modify en0s3 ipv4.method manual
+- nmcli connection modify en0s3 ipv4.dns 8.8.8.8
+- nmcli connection down en0s3
+- nmcli connection up en0s3
+- ip address show en0s3
+
+## Adding secondary static IP using nmcli
+
+- nmclu device status
+- nmcli connection show -active
+- ifconfig
+- nmcli connection modify enp0s3 +ipv4.addresses 10.0.0.211/24
+- nmcli connection reload
+- systemctl reboot
+- ip address show
