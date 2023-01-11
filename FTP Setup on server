@@ -1,0 +1,50 @@
+### SERVER SIDE CONFIGURATION
+
+# Install and configure FTP on the remote server 
+    - Become root
+    - rpm -qa | grep ftp
+    - ping www.google.com (verify if it has google accesss) 
+    - yum install vsftpd
+    - vi /etc/vsftpd/vsftpd.conf 
+    - cp vsftpd.conf vsftpd.conf.orig (making a copy first)
+    
+ # Find the following lines and make the changes as shown below:
+ ## Disable anonymous login ##
+    - anonymous_enable=NO
+    
+ ## Uncomment ##
+    - ascii_upload_enable=YES
+    - ascii_download_enable=YES
+    
+ ## Uncomment - Enter your Welcome message - THis is optional ##
+    - ftpd_banner=Welcome to UNIXMENT FTP service.
+    
+ ## Add at the end of this file ##
+    - use_localtime=YES
+    
+ # systemctl start vsftpd
+ # systemctl enable vsftpd
+ # systemctl stop firewalld
+ # systemctl disable firewalld
+ # useradd iafzal (if the user doesnot exist).
+ 
+ ---------------------------------------------------------
+ 
+ ### CLIENT SIDE CONFIGURATION
+ 
+ # Install FTP client on the client server
+    - Become root
+    - ping www.google.com (to check internet connectivity)
+    - yum install ftp
+    - su - (user)
+    - touch <file_name>
+    
+    #Command to transfer file to the FTP server:
+      - ftp <ip_address>
+      - Enter username and password
+      - bi/bin (switching into binary mode)
+      - hash (to show the progress going on)
+      - put <file_name>
+      - bye
+ 
+ 
