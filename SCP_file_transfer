@@ -1,0 +1,6 @@
+#SCP command to transfer file to the remote server.
+
+  - Login as <user>
+  - create file you want to transfer
+  - scp <file_name> <user>@<ip_address_to_trasfer>:<path_to_directory_to_transfer>
+  - Enter username and password
