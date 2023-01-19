@@ -1,0 +1,26 @@
+## rsync is a utility for efficiently transferrong and synchronizing files within the same computer or to a remote computer by comparing the notification times and files sizes.
+## rsync is lot faster then ftp or scp.
+## This utility is mostly used to backup the files and directories from one server to another. 
+## Default port 22
+### Basic Syntax of rysnc command
+    - rsync options source destination
+   * Install rsync in your linux machine (check if it already exists)
+      - yum install rsync (On centos/Redhat)
+      - apt-get install rsync (on Ubuntu/Debian based systems)
+      
+   * rysnc a file on a local machine
+      - tar cvf backup.tar . (tar the entire home directory)
+      - mkdir /tmp/backups
+      - rysnc -zvh backup.tar /tmp/backups/
+      
+   * rsync a directory on a local machine
+       - rsync -azvh /home/<directory_name> /tmp/backups/
+       
+   * rsync a file to a remote machine
+       - mkdir /tmp/backups (create /tmp/backups dir on remote server)
+       - rsync -avz backup.tar user@<dns_name>:/tmp/backups
+       
+    * rsync a file from a remote machine(fetch file from another server host to your local server)
+       - touch <file_name>
+       - rsync -avzh user@<dns_name>:/home/<user>/<file_name> /tmp/backups/
+       
